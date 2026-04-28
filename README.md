@@ -1,0 +1,5 @@
+# Module 6 - Concurrency
+
+## Commit 1 Reflection notes
+
+Pada tahap ini saya mempelajari cara membuat web server sederhana menggunakan Rust standard library. Saya menggunakan `TcpListener` untuk membuat server mendengarkan koneksi TCP pada alamat `127.0.0.1:7878`. Ketika browser mengakses alamat tersebut, server menerima koneksi melalui iterator `listener.incoming()`. Setiap koneksi yang berhasil diterima direpresentasikan sebagai stream, meskipun pada tahap ini stream tersebut belum digunakan untuk membaca request atau mengirim response. Pesan `Connection established!` yang muncul di terminal menunjukkan bahwa server sudah berhasil menerima koneksi dari browser. Saya juga memahami bahwa browser dapat membuat lebih dari satu koneksi, sehingga pesan tersebut bisa muncul beberapa kali. Pada tahap ini server masih single-threaded, sehingga setiap request masih diproses satu per satu.
