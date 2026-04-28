@@ -17,3 +17,9 @@ Pada tahap ini saya mempelajari cara membuat server mengirim response HTML ke br
 Pada tahap ini saya mempelajari cara membuat server memberikan response yang berbeda berdasarkan request path dari browser. Server membaca baris pertama HTTP request untuk mengetahui halaman apa yang sedang diminta oleh client. Jika request line bernilai `GET / HTTP/1.1`, server akan mengembalikan `hello.html` dengan status `200 OK`. Jika request line tidak sesuai dengan route yang dikenali, server akan mengembalikan `404.html` dengan status `404 NOT FOUND`. Saya juga memahami bahwa status line penting karena memberi informasi kepada browser apakah request berhasil atau gagal. Refactoring menggunakan `match` membuat kode lebih mudah dibaca dan lebih mudah dikembangkan ketika ingin menambahkan route baru. Dengan perubahan ini, server mulai memiliki perilaku yang lebih mirip web server sebenarnya karena dapat membedakan request valid dan request yang tidak ditemukan.
 
 ![Commit 3 screen capture](assets/images/commit3.png)
+
+## Commit 4 Reflection notes
+
+Pada tahap ini saya mempelajari bagaimana server single-threaded menangani request yang lambat. Saya menambahkan route `/sleep` yang menjalankan `thread::sleep(Duration::from_secs(10))` sebelum mengirim response. Ketika route tersebut diakses, server berhenti sementara selama 10 detik untuk memproses request itu. Karena server masih berjalan secara single-threaded, request lain tidak dapat diproses sampai request `/sleep` selesai. Hal ini terlihat ketika saya membuka `/sleep` lalu membuka `/` di tab lain, halaman `/` juga harus menunggu. Dari percobaan ini saya memahami bahwa single-threaded server kurang cocok untuk menangani banyak pengguna secara bersamaan. Masalah ini menjadi alasan mengapa pada tahap berikutnya server perlu dibuat multithreaded menggunakan thread pool.
+
+![Commit 4 screen capture](assets/images/commit4.png)
