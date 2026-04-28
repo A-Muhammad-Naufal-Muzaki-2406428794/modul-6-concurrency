@@ -11,3 +11,9 @@ Pada tahap ini saya mempelajari bagaimana sebuah web server sederhana menerima k
 Pada tahap ini saya mempelajari cara membuat server mengirim response HTML ke browser. Sebelumnya server hanya membaca request dari browser dan mencetaknya ke terminal, tetapi belum memberikan response apa pun. Dengan menggunakan `fs::read_to_string("hello.html")`, server membaca isi file HTML sebagai string. Setelah itu server membuat HTTP response yang terdiri dari status line, header `Content-Length`, baris kosong, dan body HTML. Header `Content-Length` penting karena memberi tahu browser ukuran body response yang dikirim oleh server. Method `stream.write_all(response.as_bytes())` digunakan untuk mengirim response tersebut melalui koneksi TCP. Setelah tahap ini, browser akhirnya dapat merender halaman HTML yang dikirim oleh server Rust.
 
 ![Commit 2 screen capture](assets/images/commit2.png)
+
+## Commit 3 Reflection notes
+
+Pada tahap ini saya mempelajari cara membuat server memberikan response yang berbeda berdasarkan request path dari browser. Server membaca baris pertama HTTP request untuk mengetahui halaman apa yang sedang diminta oleh client. Jika request line bernilai `GET / HTTP/1.1`, server akan mengembalikan `hello.html` dengan status `200 OK`. Jika request line tidak sesuai dengan route yang dikenali, server akan mengembalikan `404.html` dengan status `404 NOT FOUND`. Saya juga memahami bahwa status line penting karena memberi informasi kepada browser apakah request berhasil atau gagal. Refactoring menggunakan `match` membuat kode lebih mudah dibaca dan lebih mudah dikembangkan ketika ingin menambahkan route baru. Dengan perubahan ini, server mulai memiliki perilaku yang lebih mirip web server sebenarnya karena dapat membedakan request valid dan request yang tidak ditemukan.
+
+![Commit 3 screen capture](assets/images/commit3.png)
